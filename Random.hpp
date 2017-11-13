@@ -31,7 +31,7 @@ class Random
 {
  public:
     Random();
-    explicit Random(const int64_t seed);
+    explicit Random(const uint32_t seed);
 
     int32_t Next();
     int32_t Next(const int32_t ceiling);
@@ -43,5 +43,5 @@ class Random
  private:
      std::default_random_engine& global_urng();
      void Randomize();
-     void Randomize(const int64_t seed);
+     void Randomize(const uint32_t seed);
 };
