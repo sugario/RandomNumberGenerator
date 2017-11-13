@@ -101,7 +101,6 @@ std::default_random_engine& Random::global_urng()
     return u;
 }
 
-
 /**
  * \brief Sets the shared URNG to an unpredictable state.
  */
@@ -110,7 +109,6 @@ void Random::Randomize()
     static std::random_device rd {};
     global_urng().seed(rd());
 }
-
 
 /**
  * \brief Sets the shared URNG to an unpredictable state.
