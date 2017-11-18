@@ -93,6 +93,25 @@ float Random::NextFloat()
 }
 
 /**
+ * \brief Randomize content of an array.
+ * \tparam T: int, float, double or char
+ * \param arr: pointer to an array
+ * \param size: length of an array 
+ */
+template<class T>
+void Random::ShuffleArray(T* arr, const uint32_t size)
+{
+    for (uint32_t i = 0; i < size; i++)
+    {
+        auto r = Next(0, size - 1);
+
+        T temp = arr[r];
+        arr[r] = arr[i];
+        arr[i] = temp;
+    }
+}
+
+/**
  * \brief Create an URNG (Uniform Random Number Generator).
  */
 std::default_random_engine& Random::global_urng()

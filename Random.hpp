@@ -40,8 +40,16 @@ class Random
     double NextDouble();
     float NextFloat();
 
+    template<class T>
+    void ShuffleArray(T* arr, const uint32_t size);
+
  private:
      std::default_random_engine& global_urng();
      void Randomize();
      void Randomize(const uint32_t seed);
 };
+
+template void Random::ShuffleArray<int32_t>(int32_t* arr, uint32_t size);
+template void Random::ShuffleArray<float>(float* arr, uint32_t size);
+template void Random::ShuffleArray<double>(double* arr, uint32_t size);
+template void Random::ShuffleArray<char>(char* arr, uint32_t size);
