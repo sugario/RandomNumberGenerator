@@ -22,6 +22,9 @@
 *
 */
 
+/* C26481 recommends usage of span instead of pointer arithemtic */
+#pragma warning(disable : 26481)
+
 #include "Random.hpp"
 
 /**
