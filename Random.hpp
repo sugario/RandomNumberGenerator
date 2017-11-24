@@ -27,29 +27,42 @@
 #include <cstdint>
 #include <random>
 
+#include <algorithm>
+
 class Random
 {
  public:
     Random();
     explicit Random(const uint32_t seed);
 
-    int32_t Next();
-    int32_t Next(const int32_t ceiling);
-    int32_t Next(const int32_t floor, const int32_t ceiling);
+    int32_t Next() const;
+    int32_t Next(const int32_t ceiling) const;
+    int32_t Next(const int32_t floor, const int32_t ceiling) const;
 
-    double NextDouble();
-    float NextFloat();
+    double NextDouble() const;
+    float NextFloat() const;
 
-    template<class T>
-    void ShuffleArray(T* arr, const uint32_t size);
+    template <typename T, size_t Size>
+    void ShuffleArray(T(&arr)[Size]);
 
  private:
-     std::default_random_engine& global_urng();
-     void Randomize();
-     void Randomize(const uint32_t seed);
+     std::default_random_engine& globalURNG() const;
+     void Randomize() const;
+     void Randomize(const uint32_t seed) const;
 };
 
-template void Random::ShuffleArray<int32_t>(int32_t* arr, uint32_t size);
-template void Random::ShuffleArray<float>(float* arr, uint32_t size);
-template void Random::ShuffleArray<double>(double* arr, uint32_t size);
-template void Random::ShuffleArray<char>(char* arr, uint32_t size);
+/**
+ * \brief: Randomize the content of an array. 
+ * \tparam T: int, float, double or char
+ * \tparam Size: Length of an array
+ * \param array: Pointer to an array 
+ */
+template <typename T, size_t Size>
+void Random::ShuffleArray(T(& array)[Size])
+{
+    for (auto& element : array)
+    {
+        auto r = Next(0, Size - 1);
+        std::swap(element, array[r]);
+    }
+}

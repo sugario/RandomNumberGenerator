@@ -22,9 +22,6 @@
 *
 */
 
-/* C26481 recommends usage of span instead of pointer arithemtic */
-#pragma warning(disable : 26481)
-
 #include "Random.hpp"
 
 /**
@@ -47,16 +44,16 @@ Random::Random(const uint32_t seed)
 /**
  * \brief Create a non-negative random integer.
  */
-int32_t Random::Next()
+int32_t Random::Next() const
 {
-    return Next(0, INT_MAX);
+    return Next(0, INT32_MAX);
 }
 
 /**
  * \brief Create a non-negative random integer that is less than the specified ceiling.
  * \param ceiling: maximal 32-bit integer that can be created. 
  */
-int32_t Random::Next(const int32_t ceiling)
+int32_t Random::Next(const int32_t ceiling) const
 {
     return Next(0, ceiling);
 }
@@ -66,58 +63,39 @@ int32_t Random::Next(const int32_t ceiling)
  * \param floor: minimal 32-bit integer that can be created. 
  * \param ceiling: maximal 32-bit integer that can be created.
  */
-int32_t Random::Next(const int32_t floor, const int32_t ceiling)
+int32_t Random::Next(const int32_t floor, const int32_t ceiling) const
 {
     static std::uniform_int_distribution<> d {};
     using parm_t = decltype(d)::param_type;
 
     if (floor < ceiling)
     {
-        return d(global_urng(), parm_t { floor, ceiling });
+        return d(globalURNG(), parm_t { floor, ceiling });
     }
 
-    return d(global_urng(), parm_t { ceiling, floor });
+    return d(globalURNG(), parm_t { ceiling, floor });
 }
 
 /**
  * \brief Create a floating-point number that is greater than or equal to 0.0, and less than 1.0.
  */
-double Random::NextDouble()
+double Random::NextDouble() const
 {
-    return static_cast<double>(Next()) / INT_MAX;
+    return static_cast<double>(Next()) / INT32_MAX;
 }
 
 /**
  * \brief Create a random floating-point number between 0.0 and 1.0.
  */
-float Random::NextFloat()
+float Random::NextFloat() const
 {
-    return static_cast<float>(Next()) / INT_MAX;
-}
-
-/**
- * \brief Randomize content of an array.
- * \tparam T: int, float, double or char
- * \param arr: pointer to an array
- * \param size: length of an array 
- */
-template<class T>
-void Random::ShuffleArray(T* arr, const uint32_t size)
-{
-    for (uint32_t i = 0; i < size; i++)
-    {
-        auto r = Next(0, size - 1);
-
-        T temp = arr[r];
-        arr[r] = arr[i];
-        arr[i] = temp;
-    }
+    return static_cast<float>(Next()) / INT32_MAX;
 }
 
 /**
  * \brief Create an URNG (Uniform Random Number Generator).
  */
-std::default_random_engine& Random::global_urng()
+std::default_random_engine& Random::globalURNG() const
 {
     static std::default_random_engine u {};
     return u;
@@ -126,17 +104,17 @@ std::default_random_engine& Random::global_urng()
 /**
  * \brief Sets the shared URNG to an unpredictable state.
  */
-void Random::Randomize()
+void Random::Randomize() const
 {
     static std::random_device rd {};
-    global_urng().seed(rd());
+    globalURNG().seed(rd());
 }
 
 /**
  * \brief Sets the shared URNG to an unpredictable state.
  * \param seed: an 32-bit unsigned integer value to be used as seed by the default_random_engine
  */
-void Random::Randomize(const uint32_t seed)
+void Random::Randomize(const uint32_t seed) const
 {
-    global_urng().seed(seed);
+    globalURNG().seed(seed);
 }
