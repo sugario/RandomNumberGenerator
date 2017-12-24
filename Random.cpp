@@ -51,7 +51,7 @@ int32_t Random::Next() const
 
 /**
  * \brief Create a non-negative random integer that is less than the specified ceiling.
- * \param ceiling: maximal 32-bit integer that can be created. 
+ * \param ceiling: maximal 32-bit integer that can be created.
  */
 int32_t Random::Next(const int32_t ceiling) const
 {
@@ -60,7 +60,7 @@ int32_t Random::Next(const int32_t ceiling) const
 
 /**
  * \brief Create a random integer in range.
- * \param floor: minimal 32-bit integer that can be created. 
+ * \param floor: minimal 32-bit integer that can be created.
  * \param ceiling: maximal 32-bit integer that can be created.
  */
 int32_t Random::Next(const int32_t floor, const int32_t ceiling) const
