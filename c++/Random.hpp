@@ -22,7 +22,8 @@
  *
  */
 
-#pragma once
+#ifndef CPP_RANDOM
+#define CPP_RANDOM
 
 #include <cstdint>
 #include <random>
@@ -65,3 +66,5 @@ void Random::ShuffleArray(T(& array)[Size])
                 std::swap(element, array[r]);
         }
 }
+
+#endif  // !CPP_RANDOM
