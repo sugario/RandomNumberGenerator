@@ -20,7 +20,7 @@ class Random
         float NextFloat() const;
 
         template <typename T, size_t Size>
-        void ShuffleArray(T(&array)[Size]);
+        void ShuffleArray(T (&array)[Size]);
 
  private:
         std::default_random_engine& globalURNG() const;
@@ -35,7 +35,7 @@ class Random
  * \param array: Pointer to an array
  */
 template <typename T, size_t Size>
-void Random::ShuffleArray(T(& array)[Size])
+void Random::ShuffleArray(T (& array)[Size])
 {
         for (auto& element : array) {
                 auto r = Next(0, Size - 1);
