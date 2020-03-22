@@ -12,7 +12,7 @@ Random::Random()
  * \brief Initializes a new instance of the Random class, using the specified seed value.
  * \param seed: 32-but unsigned integer feeding an instance of default_random_engine
  */
-Random::Random(const uint32_t seed)
+Random::Random(uint32_t seed)
 {
         Randomize(seed);
 }
@@ -29,7 +29,7 @@ int32_t Random::Next() const
  * \brief Create a non-negative random integer that is less than the specified ceiling.
  * \param ceiling: maximal 32-bit integer that can be created.
  */
-int32_t Random::Next(const int32_t ceiling) const
+int32_t Random::Next(int32_t ceiling) const
 {
         return Next(0, ceiling);
 }
@@ -39,7 +39,7 @@ int32_t Random::Next(const int32_t ceiling) const
  * \param floor: minimal 32-bit integer that can be created.
  * \param ceiling: maximal 32-bit integer that can be created.
  */
-int32_t Random::Next(const int32_t floor, const int32_t ceiling) const
+int32_t Random::Next(int32_t floor, int32_t ceiling) const
 {
         static std::uniform_int_distribution<> d {};
         using parm_t = decltype(d)::param_type;
@@ -89,7 +89,7 @@ void Random::Randomize() const
  * \brief Sets the shared URNG to an unpredictable state.
  * \param seed: an 32-bit unsigned integer value to be used as seed by the default_random_engine
  */
-void Random::Randomize(const uint32_t seed) const
+void Random::Randomize(uint32_t seed) const
 {
         globalURNG().seed(seed);
 }
