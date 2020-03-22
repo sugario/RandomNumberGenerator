@@ -1,26 +1,26 @@
 /*
-*
-* Copyright 2017 Tino Melvan
-*
-* Permission is hereby granted, free of charge, to any person obtaining
-* a copy of this software and associated documentation files (the "Software"),
-* to deal in the Software without restriction, including without limitation
-* the rights to use, copy, modify, merge, publish, distribute, sublicense,
-* and/or sell copies of the Software, and to permit persons to whom the
-* Software is furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included
-* in all copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-* OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-* SOFTWARE.
-*
-*/
+ *
+ * Copyright 2017 Tino Melvan
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ */
 
 #include "Random.hpp"
 
@@ -29,7 +29,7 @@
  */
 Random::Random()
 {
-    Randomize();
+        Randomize();
 }
 
 /**
@@ -38,7 +38,7 @@ Random::Random()
  */
 Random::Random(const uint32_t seed)
 {
-    Randomize(seed);
+        Randomize(seed);
 }
 
 /**
@@ -46,7 +46,7 @@ Random::Random(const uint32_t seed)
  */
 int32_t Random::Next() const
 {
-    return Next(0, INT32_MAX);
+        return Next(0, INT32_MAX);
 }
 
 /**
@@ -55,7 +55,7 @@ int32_t Random::Next() const
  */
 int32_t Random::Next(const int32_t ceiling) const
 {
-    return Next(0, ceiling);
+        return Next(0, ceiling);
 }
 
 /**
@@ -65,15 +65,14 @@ int32_t Random::Next(const int32_t ceiling) const
  */
 int32_t Random::Next(const int32_t floor, const int32_t ceiling) const
 {
-    static std::uniform_int_distribution<> d {};
-    using parm_t = decltype(d)::param_type;
+        static std::uniform_int_distribution<> d {};
+        using parm_t = decltype(d)::param_type;
 
-    if (floor < ceiling)
-    {
-        return d(globalURNG(), parm_t { floor, ceiling });
-    }
+        if (floor < ceiling) {
+                return d(globalURNG(), parm_t { floor, ceiling });
+        }
 
-    return d(globalURNG(), parm_t { ceiling, floor });
+        return d(globalURNG(), parm_t { ceiling, floor });
 }
 
 /**
@@ -81,7 +80,7 @@ int32_t Random::Next(const int32_t floor, const int32_t ceiling) const
  */
 double Random::NextDouble() const
 {
-    return static_cast<double>(Next()) / INT32_MAX;
+        return static_cast<double>(Next()) / INT32_MAX;
 }
 
 /**
@@ -89,7 +88,7 @@ double Random::NextDouble() const
  */
 float Random::NextFloat() const
 {
-    return static_cast<float>(Next()) / INT32_MAX;
+        return static_cast<float>(Next()) / INT32_MAX;
 }
 
 /**
@@ -97,8 +96,8 @@ float Random::NextFloat() const
  */
 std::default_random_engine& Random::globalURNG() const
 {
-    static std::default_random_engine u {};
-    return u;
+        static std::default_random_engine u {};
+        return u;
 }
 
 /**
@@ -106,8 +105,8 @@ std::default_random_engine& Random::globalURNG() const
  */
 void Random::Randomize() const
 {
-    static std::random_device rd {};
-    globalURNG().seed(rd());
+        static std::random_device rd {};
+        globalURNG().seed(rd());
 }
 
 /**
@@ -116,5 +115,5 @@ void Random::Randomize() const
  */
 void Random::Randomize(const uint32_t seed) const
 {
-    globalURNG().seed(seed);
+        globalURNG().seed(seed);
 }
