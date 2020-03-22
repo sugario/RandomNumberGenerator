@@ -1,4 +1,10 @@
+#include <cstdint>
+#include <cstdlib>
+#include <random>
+
 #include "Random.hpp"
+
+#define DEFAULT_MAX_RAND_VALUE  RAND_MAX
 
 /**
  * \brief Initializes a new instance of the Random class.
@@ -24,7 +30,7 @@ Random::Random(uint32_t seed)
  */
 int32_t Random::Next() const
 {
-        return Next(0, INT32_MAX);
+        return Next(0, DEFAULT_MAX_RAND_VALUE);
 }
 
 /**
@@ -60,7 +66,7 @@ int32_t Random::Next(int32_t floor, int32_t ceiling) const
  */
 double Random::NextDouble() const
 {
-        return static_cast<double>(Next()) / INT32_MAX;
+        return static_cast<double>(Next()) / DEFAULT_MAX_RAND_VALUE;
 }
 
 /**
@@ -68,7 +74,7 @@ double Random::NextDouble() const
  */
 float Random::NextFloat() const
 {
-        return static_cast<float>(Next()) / INT32_MAX;
+        return static_cast<float>(Next()) / DEFAULT_MAX_RAND_VALUE;
 }
 
 /**
