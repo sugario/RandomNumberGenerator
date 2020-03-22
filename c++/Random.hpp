@@ -1,5 +1,5 @@
-#ifndef CPP_RANDOM
-#define CPP_RANDOM
+#ifndef CPP_RANDOM_HPP
+#define CPP_RANDOM_HPP
 
 #include <cstdint>
 #include <random>
@@ -43,4 +43,4 @@ void Random::ShuffleArray(T (& array)[Size])
         }
 }
 
-#endif  // !CPP_RANDOM
+#endif  // !CPP_RANDOM_HPP
