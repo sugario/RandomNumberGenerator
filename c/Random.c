@@ -68,7 +68,7 @@ Random RandomGenerator(enum TypeofSeed seedType)
                 srand(seed);
         }
 
-        if (seedType != SEED_KEEP_USED ||
+        if (seedType != SEED_KEEP_USED &&
             seedType != FORCE_RESEED) {
                 __generator.initialized = seedType;
         }
