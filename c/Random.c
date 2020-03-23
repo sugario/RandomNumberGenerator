@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+#include <time.h>
+
 #include "Random.h"
 
 #define SRAND_DEFAULT_SEED      (1)
@@ -9,6 +11,7 @@ static int32_t __Next(void);
 static int32_t __NextBound(int32_t floor, int32_t ceiling);
 
 static uint64_t Rdtsc(void);
+static uint64_t CurrentTime(void);
 
 static uint64_t GenerateSeed(enum TypeofSeed seedType);
 
@@ -40,6 +43,11 @@ static uint64_t Rdtsc(void)
         return ((uint64_t)hi << 32) | lo;
 }
 
+static uint64_t CurrentTime(void)
+{
+        return time(NULL);
+}
+
 static uint64_t GenerateSeed(enum TypeofSeed seedType)
 {
         if (seedType == SEED_KEEP_USED ||
@@ -54,6 +62,8 @@ static uint64_t GenerateSeed(enum TypeofSeed seedType)
         switch (seedType) {
         case SEED_RDTSC:
                 return Rdtsc();
+        case SEED_CURRENT_TIME:
+                return CurrentTime();
         case SEED_UNINITIALIZED:
         default:
                 return SRAND_DEFAULT_SEED;

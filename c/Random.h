@@ -6,6 +6,7 @@
 enum TypeofSeed {
         SEED_UNINITIALIZED,
         SEED_RDTSC,
+        SEED_CURRENT_TIME,
         SEED_KEEP_USED,
         FORCE_RESEED
 };
