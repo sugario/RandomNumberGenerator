@@ -13,7 +13,7 @@ static uint64_t Rdtsc(void);
 static uint64_t GenerateSeed(enum TypeofSeed seedType);
 
 static Random __generator = {
-        .initialized = SEED_UNINITIALIZED,
+        .typeInitialized = SEED_UNINITIALIZED,
         .seed = SRAND_DEFAULT_SEED,
 
         .Next = &__Next,
@@ -43,12 +43,12 @@ static uint64_t Rdtsc(void)
 static uint64_t GenerateSeed(enum TypeofSeed seedType)
 {
         if (seedType == SEED_KEEP_USED ||
-            seedType == __generator.initialized) {
+            seedType == __generator.typeInitialized) {
                 return __generator.seed;
         }
 
         if (seedType == FORCE_RESEED) {
-                seedType = __generator.initialized;
+                seedType = __generator.typeInitialized;
         }
 
         switch (seedType) {
@@ -70,7 +70,7 @@ Random RandomGenerator(enum TypeofSeed seedType)
 
         if (seedType != SEED_KEEP_USED &&
             seedType != FORCE_RESEED) {
-                __generator.initialized = seedType;
+                __generator.typeInitialized = seedType;
         }
 
         return __generator;

@@ -11,7 +11,7 @@ enum TypeofSeed {
 };
 
 typedef struct Random {
-        enum TypeofSeed initialized;
+        enum TypeofSeed typeInitialized;
         uint64_t seed;
 
         int32_t (*Next)(void);
