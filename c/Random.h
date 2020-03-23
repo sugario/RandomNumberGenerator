@@ -13,7 +13,7 @@ enum TypeofSeed {
 
 typedef struct Random {
         enum TypeofSeed typeInitialized;
-        uint64_t seed;
+        uint32_t seed;
 
         int32_t (*Next)(void);
         int32_t (*NextBound)(int32_t floor, int32_t ceiling);

@@ -5,15 +5,15 @@
 
 #include "Random.h"
 
-#define SRAND_DEFAULT_SEED      (1)
+#define SRAND_DEFAULT_SEED      (1U)
 
 static int32_t __Next(void);
 static int32_t __NextBound(int32_t floor, int32_t ceiling);
 
-static uint64_t Rdtsc(void);
-static uint64_t CurrentTime(void);
+static uint32_t Rdtsc(void);
+static uint32_t CurrentTime(void);
 
-static uint64_t GenerateSeed(enum TypeofSeed seedType);
+static uint32_t GenerateSeed(enum TypeofSeed seedType);
 
 static Random __generator = {
         .typeInitialized = SEED_UNINITIALIZED,
@@ -33,7 +33,7 @@ static int32_t __NextBound(int32_t floor, int32_t ceiling)
         return (rand() % (ceiling - floor + 1)) + floor;
 }
 
-static uint64_t Rdtsc(void)
+static uint32_t Rdtsc(void)
 {
         uint32_t lo;
         uint32_t hi;
@@ -43,12 +43,12 @@ static uint64_t Rdtsc(void)
         return ((uint64_t)hi << 32) | lo;
 }
 
-static uint64_t CurrentTime(void)
+static uint32_t CurrentTime(void)
 {
         return time(NULL);
 }
 
-static uint64_t GenerateSeed(enum TypeofSeed seedType)
+static uint32_t GenerateSeed(enum TypeofSeed seedType)
 {
         if (seedType == SEED_KEEP_USED ||
             seedType == __generator.typeInitialized) {
@@ -72,7 +72,7 @@ static uint64_t GenerateSeed(enum TypeofSeed seedType)
 
 Random RandomGenerator(enum TypeofSeed seedType)
 {
-        uint64_t seed = GenerateSeed(seedType);
+        uint32_t seed = GenerateSeed(seedType);
         if (seed != __generator.seed) {
                 __generator.seed = seed;
                 srand(seed);
