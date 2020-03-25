@@ -11,9 +11,12 @@
 #include "Random.h"
 
 #define SRAND_DEFAULT_SEED      (1U)
+#define DEFAULT_MAX_RAND_VALUE  (RAND_MAX)
 
 static int32_t __Next(void);
 static int32_t __NextBound(int32_t floor, int32_t ceiling);
+static double __NextDouble(void);
+static float __NextFloat(void);
 
 static uint32_t Rdtsc(void);
 static uint32_t CurrentTime(void);
@@ -25,7 +28,10 @@ static Random __generator = {
         .seed = SRAND_DEFAULT_SEED,
 
         .Next = &__Next,
-        .NextBound = &__NextBound
+        .NextBound = &__NextBound,
+
+        .NextDouble = &__NextDouble,
+        .NextFloat = &__NextFloat
 };
 
 static int32_t __Next(void)
@@ -36,6 +42,16 @@ static int32_t __Next(void)
 static int32_t __NextBound(int32_t floor, int32_t ceiling)
 {
         return (rand() % (ceiling - floor + 1)) + floor;
+}
+
+static double __NextDouble(void)
+{
+        return ((double)__Next()) / DEFAULT_MAX_RAND_VALUE;
+}
+
+static float __NextFloat(void)
+{
+        return ((float)__Next()) / DEFAULT_MAX_RAND_VALUE;
 }
 
 static uint32_t Rdtsc(void)

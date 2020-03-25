@@ -22,6 +22,9 @@ typedef struct Random {
 
         int32_t (*Next)(void);
         int32_t (*NextBound)(int32_t floor, int32_t ceiling);
+
+        double (*NextDouble)(void);
+        float (*NextFloat)(void);
 } Random;
 
 Random RandomGenerator(enum TypeofSeed seedType);
