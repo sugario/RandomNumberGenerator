@@ -21,6 +21,10 @@ static float __NextFloat(void);
 static uint32_t Rdtsc(void);
 static uint32_t CurrentTime(void);
 
+#ifdef __unix__
+static uint32_t URandom(void);
+#endif
+
 static uint32_t GenerateSeed(enum TypeofSeed seedType);
 
 static Random __generator = {
