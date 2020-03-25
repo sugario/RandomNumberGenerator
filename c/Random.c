@@ -13,6 +13,9 @@
 #define SRAND_DEFAULT_SEED      (1U)
 #define DEFAULT_MAX_RAND_VALUE  (RAND_MAX)
 
+static void SeedSequenceGenerator(uint32_t seed);
+static int32_t GetRandomInteger(void);
+
 static int32_t __Next(void);
 static int32_t __NextBound(int32_t floor, int32_t ceiling);
 static double __NextDouble(void);
@@ -38,14 +41,24 @@ static Random __generator = {
         .NextFloat = &__NextFloat
 };
 
-static int32_t __Next(void)
+static void SeedSequenceGenerator(uint32_t seed)
+{
+        srand(seed);
+}
+
+static int32_t GetRandomInteger(void)
 {
         return rand();
 }
 
+static int32_t __Next(void)
+{
+        return GetRandomInteger();
+}
+
 static int32_t __NextBound(int32_t floor, int32_t ceiling)
 {
-        return (rand() % (ceiling - floor + 1)) + floor;
+        return (GetRandomInteger() % (ceiling - floor + 1)) + floor;
 }
 
 static double __NextDouble(void)
@@ -123,7 +136,7 @@ Random RandomGenerator(enum TypeofSeed seedType)
         uint32_t seed = GenerateSeed(seedType);
         if (seed != __generator.seed) {
                 __generator.seed = seed;
-                srand(seed);
+                SeedSequenceGenerator(seed);
         }
 
         if (seedType != SEED_KEEP_USED &&
