@@ -43,12 +43,20 @@ static Random __generator = {
 
 static void SeedSequenceGenerator(uint32_t seed)
 {
+#ifdef __unix__
+        srandom(seed);
+#else
         srand(seed);
+#endif
 }
 
 static int32_t GetRandomInteger(void)
 {
+#ifdef __unix__
+        return random();
+#else
         return rand();
+#endif
 }
 
 static int32_t __Next(void)
