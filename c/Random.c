@@ -57,11 +57,10 @@ static float __NextFloat(void)
 static uint32_t Rdtsc(void)
 {
         uint32_t lo;
-        uint32_t hi;
 
-        __asm__ __volatile__("rdtsc" : "=a"(lo), "=d"(hi));
+        __asm__ __volatile__("rdtsc" : "=a"(lo));
 
-        return ((uint64_t)hi << 32) | lo;
+        return lo;
 }
 
 static uint32_t CurrentTime(void)
