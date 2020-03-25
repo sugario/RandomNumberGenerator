@@ -3,6 +3,11 @@
 
 #include <time.h>
 
+#ifdef __unix__
+#include <unistd.h>
+#include <fcntl.h>
+#endif
+
 #include "Random.h"
 
 #define SRAND_DEFAULT_SEED      (1U)
@@ -48,6 +53,26 @@ static uint32_t CurrentTime(void)
         return time(NULL);
 }
 
+#ifdef __unix__
+static uint32_t URandom(void)
+{
+        uint32_t seed;
+
+        int32_t urandom_dev = open("/dev/urandom", O_RDONLY);
+        if (urandom_dev < 0) {
+                return SRAND_DEFAULT_SEED;
+        }
+
+        if (read(urandom_dev, &seed, sizeof(uint32_t)) != sizeof(uint32_t)) {
+                (void)close(urandom_dev);
+                return SRAND_DEFAULT_SEED;
+        }
+
+        (void)close(urandom_dev);
+        return seed;
+}
+#endif
+
 static uint32_t GenerateSeed(enum TypeofSeed seedType)
 {
         if (seedType == SEED_KEEP_USED ||
@@ -64,6 +89,10 @@ static uint32_t GenerateSeed(enum TypeofSeed seedType)
                 return Rdtsc();
         case SEED_CURRENT_TIME:
                 return CurrentTime();
+#ifdef __unix__
+        case SEED_URANDOM_DEV:
+                return URandom();
+#endif
         case SEED_UNINITIALIZED:
         default:
                 return SRAND_DEFAULT_SEED;

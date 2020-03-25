@@ -7,6 +7,11 @@ enum TypeofSeed {
         SEED_UNINITIALIZED,
         SEED_RDTSC,
         SEED_CURRENT_TIME,
+
+#ifdef __unix__
+        SEED_URANDOM_DEV,
+#endif
+
         SEED_KEEP_USED,
         FORCE_RESEED
 };
